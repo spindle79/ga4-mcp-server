@@ -1,0 +1,66 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Security Best Practices
+
+## Environment Variables
+- Never commit sensitive credentials
+- Use .env files for local development
+- Validate all environment variables
+- Use separate environments for development/staging/production
+
+Example validation:
+```typescript
+const envSchema = z.object({
+  GA_PROPERTY_ID: z.string().min(1),
+  GOOGLE_APPLICATION_CREDENTIALS: z.string().min(1),
+  // Add other required variables
+});
+```
+
+## API Security
+- Implement rate limiting
+- Use CORS appropriately
+- Validate all input
+- Sanitize all output
+
+CORS configuration:
+```typescript
+app.use(cors({
+  origin: process.env.ALLOWED_ORIGINS?.split(',') || '*',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+```
+
+## Authentication
+- Use secure authentication methods
+- Implement proper session management
+- Store credentials securely
+- Regular credential rotation
+
+## Data Handling
+- Sanitize user input
+- Validate data types
+- Prevent injection attacks
+- Handle sensitive data appropriately
+
+## Error Handling
+- Don't expose internal errors
+- Log security events
+- Implement proper error boundaries
+- Use secure error messages
+
+## Dependencies
+- Regular security updates
+- Audit dependencies
+- Lock dependency versions
+- Monitor for vulnerabilities
+
+## API Keys
+- Secure storage of API keys
+- Regular key rotation
+- Implement key restrictions
+- Monitor key usage

@@ -1,0 +1,40 @@
+{
+  "name": "google-analytics-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Google Analytics",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "test": "jest",
+    "test:mcp": "DEBUG=true pnpm ./scripts/test-mcp.sh",
+    "test:rest": "tsx scripts/test-rest.mts"
+  },
+  "dependencies": {
+    "@google-analytics/data": "^5.1.0",
+    "@modelcontextprotocol/sdk": "^1.10.2",
+    "@types/cors": "^2.8.17",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^5.1.0",
+    "google-auth-library": "^9.15.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/inspector": "^0.10.2",
+    "@types/express": "^5.0.1",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.14.1",
+    "@types/node-fetch": "^2.6.12",
+    "jest": "^29.7.0",
+    "node-fetch": "^3.3.2",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.7.1",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

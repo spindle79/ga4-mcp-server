@@ -1,0 +1,42 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Project Setup Guidelines
+
+## Node Version
+- Use Node.js version 22 or higher as specified in package.json
+- Ensure .nvmrc is present and matches the engine requirement
+- Use pnpm as the package manager (as evidenced by pnpm-lock.yaml)
+
+## Environment Variables
+Always validate environment variables using Zod schemas:
+
+```typescript
+const envSchema = z.object({
+  REQUIRED_VAR: z.string().min(1),
+  OPTIONAL_VAR: z.string().optional(),
+  PORT: z.string().transform(Number).default("3000"),
+});
+
+const env = envSchema.safeParse(process.env);
+if (!env.success) {
+  console.error("Invalid environment variables:", env.error.format());
+  process.exit(1);
+}
+```
+
+## TypeScript Configuration
+- Use strict mode in tsconfig.json
+- Enable ESM modules (type: "module" in package.json)
+- Maintain explicit return types on exported functions
+- Use path aliases for clean imports when possible
+
+## Scripts
+Standard npm scripts should include:
+- `build`: Compile TypeScript
+- `start`: Run production server
+- `dev`: Development mode with watch
+- `test`: Run test suite
+- Add descriptive prefixes for specialized scripts (e.g., `test:mcp`, `test:rest`)

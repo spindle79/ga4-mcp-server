@@ -1,0 +1,68 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# API Architecture Guidelines
+
+## Response Interfaces
+Define clear interface hierarchies for API responses:
+
+```typescript
+interface BaseResponse<T> {
+  endpoint: string;
+  path: string;
+  dateRange: {
+    startDate: string;
+    endDate: string;
+  };
+  result: T;
+  timeBreakdown?: {
+    daily: Array<{ date: string; metrics: T }>;
+    monthly: Array<{ month: string; metrics: T }>;
+  };
+}
+```
+
+## Parameter Validation
+- Use TypeScript interfaces for all API parameters
+- Include optional parameters with clear defaults
+- Document parameter constraints in interface definitions
+
+Example:
+```typescript
+interface AnalyticsParams {
+  url: string;
+  startDate?: string;
+  endDate?: string;
+  timeframe?: string;
+  limit?: number;
+}
+```
+
+## Error Handling
+- Use structured error responses
+- Include appropriate HTTP status codes
+- Provide detailed error messages in development
+- Sanitize error details in production
+
+## Logging
+Use the debug utility for consistent logging:
+```typescript
+debugLog("info", "Operation description", {
+  contextData: value,
+  additionalInfo: details
+});
+```
+
+## API Documentation
+- Document all endpoints with JSDoc comments
+- Include parameter descriptions and constraints
+- Provide example requests and responses
+- Note any rate limits or usage restrictions
+
+## Request Processing
+- Validate input parameters before processing
+- Use utility functions for common operations
+- Implement proper error boundaries
+- Cache expensive operations where appropriate

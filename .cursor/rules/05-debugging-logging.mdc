@@ -1,0 +1,77 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Debugging and Logging Standards
+
+## Debug Logging
+Use the standardized debug logging utility:
+```typescript
+function debugLog(
+  level: "info" | "warn" | "error",
+  message: string,
+  data?: any
+) {
+  if (DEBUG) {
+    const timestamp = new Date().toISOString();
+    const emoji = level === "info" ? "ℹ️" : level === "warn" ? "⚠️" : "🚨";
+    console.log(`${emoji} [${timestamp}] ${message}`);
+    if (data) {
+      console.log(JSON.stringify(data, null, 2));
+    }
+  }
+}
+```
+
+## Log Levels
+Use appropriate log levels:
+- `info`: Regular operation information
+- `warn`: Potential issues that don't affect operation
+- `error`: Critical issues that affect operation
+
+## Function Entry/Exit Logging
+Log function entry/exit for key operations:
+```typescript
+async function importantOperation(params: Params) {
+  const fnId = randomUUID();
+  debugLog("info", `[${fnId}] Starting operation`, { params });
+  
+  try {
+    const result = await doWork();
+    debugLog("info", `[${fnId}] Operation completed`, { result });
+    return result;
+  } catch (error) {
+    debugLog("error", `[${fnId}] Operation failed`, { error });
+    throw error;
+  }
+}
+```
+
+## Error Logging
+- Include stack traces in development
+- Sanitize sensitive data
+- Use consistent error formats
+- Include correlation IDs
+
+## Performance Logging
+Log performance metrics:
+```typescript
+const start = performance.now();
+// ... operation ...
+debugLog("info", "Operation timing", {
+  duration: performance.now() - start
+});
+```
+
+## Environment-Specific Logging
+- Use DEBUG environment variable
+- Adjust detail level by environment
+- Configure log destinations
+- Implement log rotation
+
+## Security Logging
+- Log authentication attempts
+- Track API usage
+- Monitor rate limits
+- Log security events

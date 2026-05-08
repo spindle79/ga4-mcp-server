@@ -1,0 +1,77 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Testing Standards
+
+## Test Structure
+- Place tests in `__tests__` directories or with `.test.ts`/`.spec.ts` suffix
+- Group related tests in describe blocks
+- Use clear, descriptive test names
+- Follow AAA pattern (Arrange, Act, Assert)
+
+Example:
+```typescript
+describe('Analytics API', () => {
+  describe('getUrlPageViews', () => {
+    it('should return page views for valid URL', async () => {
+      // Arrange
+      const url = '/test-page';
+      const startDate = '2024-01-01';
+      
+      // Act
+      const result = await getUrlPageViews(url, startDate);
+      
+      // Assert
+      expect(result).toHaveProperty('endpoint');
+      expect(result.result).toBeDefined();
+    });
+  });
+});
+```
+
+## Mocking
+- Mock external services (GA4, etc.)
+- Use consistent mock data
+- Reset mocks between tests
+- Document mock behavior
+
+## Test Coverage
+- Maintain high coverage for core functionality
+- Test edge cases and error conditions
+- Include integration tests
+- Test async operations properly
+
+## Test Utilities
+Create reusable test utilities:
+```typescript
+export const mockAnalyticsResponse = {
+  endpoint: '/analytics',
+  dateRange: {
+    startDate: '2024-01-01',
+    endDate: '2024-01-31'
+  },
+  result: {
+    // Mock data
+  }
+};
+```
+
+## Error Testing
+- Test error handling paths
+- Verify error messages
+- Test timeout scenarios
+- Validate error recovery
+
+## Performance Testing
+- Include response time assertions
+- Test with large datasets
+- Verify memory usage
+- Test concurrent operations
+
+## CI Integration
+- Run tests in CI pipeline
+- Maintain test stability
+- Report test coverage
+- Archive test artifacts

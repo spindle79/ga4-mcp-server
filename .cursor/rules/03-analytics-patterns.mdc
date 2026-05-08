@@ -1,0 +1,69 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Google Analytics Integration Guidelines
+
+## Client Initialization
+Initialize the GA client once and reuse:
+```typescript
+const analyticsClient = new BetaAnalyticsDataClient();
+```
+
+## Date Range Handling
+Use the standardized date range utility:
+```typescript
+function getDateRange(timeframe?: string): DateRange {
+  // Support standard timeframes:
+  // - today
+  // - yesterday
+  // - this week
+  // - last week
+  // - this month
+  // - last month
+  // Default to last 30 days if not specified
+}
+```
+
+## Metric Definitions
+Define clear interfaces for each metric type:
+```typescript
+interface EngagementMetrics {
+  averageSessionDuration: number;
+  bounceRate: number;
+  engagedSessions: number;
+  screenPageViewsPerSession: number;
+}
+
+interface TrafficSource {
+  source: string;
+  medium: string;
+  pageViews: number;
+  users: number;
+}
+```
+
+## Query Construction
+- Use type-safe dimension and metric definitions
+- Include appropriate filters and date ranges
+- Handle pagination for large result sets
+- Implement retry logic for failed requests
+
+## Data Aggregation
+- Group metrics by appropriate time periods (daily/monthly)
+- Provide both raw and aggregated data
+- Include metadata with response
+- Cache frequently requested data
+
+## Error Handling
+- Handle GA4 API specific errors
+- Provide fallback values where appropriate
+- Log detailed error information
+- Implement circuit breakers for rate limits
+
+## Performance
+- Batch requests when possible
+- Use appropriate sampling rates
+- Cache responses with reasonable TTL
+- Monitor API quota usage
