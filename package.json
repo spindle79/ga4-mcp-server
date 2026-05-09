@@ -9,7 +9,8 @@
     "dev": "tsx watch src/server.ts",
     "test": "jest",
     "test:mcp": "DEBUG=true pnpm ./scripts/test-mcp.sh",
-    "test:rest": "tsx scripts/test-rest.mts"
+    "test:rest": "tsx scripts/test-rest.mts",
+    "prepare": "husky"
   },
   "dependencies": {
     "@google-analytics/data": "^5.1.0",
@@ -32,9 +33,15 @@
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "tsx": "^4.7.1",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.12",
+    "prettier": "^3.4.2"
   },
   "engines": {
     "node": ">=22"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs,cjs,json,md,yaml,yml,css,html}": "prettier --write"
   }
 }
